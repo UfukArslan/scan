@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Data } from '@angular/router';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   scanActive: boolean = false;
 
-  constructor() {}
+  public d;
+ 
+
+  constructor(private _data: DataService) {}
+
+  ngOnInit(){}
+
+  
 
   async checkPermission() {
     return new Promise(async (resolve, reject) => {
@@ -53,4 +62,16 @@ export class HomePage {
     BarcodeScanner.stopScan();
     this.scanActive = false;
   }
+
+  buttonData(){
+    this._data.getData()
+      // .subscribe(data => this.d = data + console.log("hello" + this.d) );
+      .subscribe(_data => {
+        this.d = _data;
+        console.log(this.d.data[0]._id);
+      });
+  }
+
+ 
+
 }
