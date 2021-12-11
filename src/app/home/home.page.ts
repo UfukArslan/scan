@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
     return new Promise(async (resolve, reject) => {
       const status = await BarcodeScanner.checkPermission({ force: true });
       if (status.granted) {
-        console.log('Console.log - checkPermission')
+        console.log('Console.log - checkPermission1');
         resolve(true);
       } else if (status.denied) {
         BarcodeScanner.openAppSettings();
@@ -35,10 +35,14 @@ export class HomePage implements OnInit {
   
   async startScanner() {
     const allowed = await this.checkPermission();
+
+
+
     
     if (allowed) {
       this.scanActive = true;
-      console.log('Console.log - startScanner')
+      console.log('Console.log - startScanner1');
+      this.data();
       BarcodeScanner.hideBackground();
       
       const result = await BarcodeScanner.startScan();
@@ -54,23 +58,34 @@ export class HomePage implements OnInit {
       alert('NOT ALLOWED!');
     }
   }
-
+  
   stopScanner() {
     BarcodeScanner.stopScan();
     this.scanActive = false;
   }
-
+  
   ionViewWillLeave() {
     BarcodeScanner.stopScan();
     this.scanActive = false;
   }
-
+  
   buttonData(){
     this._data.getData()
-      // .subscribe(data => this.d = data + console.log("hello" + this.d) );
-      .subscribe(_data => {
-        this.d = _data;
-        console.log(this.d.data[0]._id);
+    // .subscribe(data => this.d = data + console.log("hello" + this.d) );
+    .subscribe(_data => {
+      this.d = _data;
+      console.log('Console.log - 10buttonDatat10');
+      console.log(this.d.data[0]._id);
+      });
+  }
+
+  data(){
+    this._data.getData()
+    // .subscribe(data => this.d = data + console.log("hello" + this.d) );
+    .subscribe(_data => {
+      this.d = _data;
+      console.log('Console.log - datat');
+      console.log(this.d.data[0]._id);
       });
   }
 
