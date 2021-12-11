@@ -24,6 +24,7 @@ export class HomePage implements OnInit {
     return new Promise(async (resolve, reject) => {
       const status = await BarcodeScanner.checkPermission({ force: true });
       if (status.granted) {
+        console.log('Console.log - checkPermission')
         resolve(true);
       } else if (status.denied) {
         BarcodeScanner.openAppSettings();
@@ -31,16 +32,17 @@ export class HomePage implements OnInit {
       }
     });
   }
-
+  
   async startScanner() {
     const allowed = await this.checkPermission();
-
+    
     if (allowed) {
       this.scanActive = true;
+      console.log('Console.log - startScanner')
       BarcodeScanner.hideBackground();
-
+      
       const result = await BarcodeScanner.startScan();
-
+      
       if (result.hasContent) {
         this.scanActive = false;
         alert(result.content); //The QR content will come out here

@@ -14,7 +14,6 @@ export class DataService {
 
   getData(): Observable<any>{
     return this.http.get(this._url)
-    // map(response => response)
     
   }
 }
