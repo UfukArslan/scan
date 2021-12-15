@@ -68,7 +68,7 @@ export class HomePage implements OnInit {
       // .subscribe(data => this.d = data + console.log("hello" + this.d) );
       .subscribe(_data => {
         this.d = _data;
-        console.log(this.d.data[0]._id);
+        console.log(_data);
       });
   }
 

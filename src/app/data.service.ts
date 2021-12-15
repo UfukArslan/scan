@@ -8,13 +8,11 @@ import { map } from 'rxjs/operators';
 })
 export class DataService {
 
-  private _url: string = "http://bsm-ws.herokuapp.com/documents";
+  private _url: string = "http://bsm-ws.herokuapp.com/documents/?_id=61b4d862b2cba600168538f4";
 
   constructor(private http: HttpClient) { }
 
   getData(): Observable<any>{
     return this.http.get(this._url)
-    // map(response => response)
-    
   }
 }
