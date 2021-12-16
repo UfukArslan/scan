@@ -18,8 +18,10 @@ export class DataService {
   // getData used for test
   getData(content): Observable<any>{
     console.log("Console.log content brut " + content);
-    this.c = content.substring(0,67);
+    this.c = content.substring(0,24);
     console.log("Console.log content substring " + this.c);
+    console.log("http://bsm-ws.herokuapp.com/documents/?_id=" + this.c);
+
     return this.http.get("http://bsm-ws.herokuapp.com/documents/?_id=" + this.c)
   }
 

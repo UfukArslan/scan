@@ -29,6 +29,7 @@ export class HomePage implements OnInit {
   async checkPermission() {
     return new Promise(async (resolve, reject) => {
       const status = await BarcodeScanner.checkPermission({ force: true });
+      console.log('Console.log - checkPermission');
       if (status.granted) {
         resolve(true);
       } else if (status.denied) {
@@ -39,6 +40,8 @@ export class HomePage implements OnInit {
   }
   
   async startScanner() {
+
+    
     const allowed = await this.checkPermission();
     
     if (allowed) {
@@ -48,33 +51,44 @@ export class HomePage implements OnInit {
       const result = await BarcodeScanner.startScan();
       console.log('Console.log - startScanner - before if');
 
+
       if (result.hasContent) {
         this.scanActive = false;
-        alert(result.content); //The QR content will come out here
-        //Handle the data as your heart desires here
-      } else {
-        alert('NO DATA FOUND!');
-      }
-    } else {
-      alert('NOT ALLOWED!');
-    }
+
+        this._data.getData(result.content)
+      .subscribe(_data => {
+        this._d = _data;
+        console.log('Console.log - startScanner - before2 if' + this._d);
+        this.versionCheck(result.content, this._d)
+      });
+
+    
+    
+    //alert(result.content); //The QR content will come out here
+    //Handle the data as your heart desires here
+  } else {
+    alert('NO DATA FOUND!');
   }
-  
-  stopScanner() {
-    BarcodeScanner.stopScan();
-    this.scanActive = false;
-  }
-  
-  ionViewWillLeave() {
-    BarcodeScanner.stopScan();
-    this.scanActive = false;
-  }
-  // This function going to check the last version in the database
-  versionCheck(_content, _database ){
-    this._c = _content;
-    this._d = _database;
-    this._cIdentifant = this._c.substring(-1);
-    this._dIdentifiant = this._d.data[0].versions[this._d.data[0].versions.length -1].identifiant
+} else {
+  alert('NOT ALLOWED!');
+}
+}
+
+stopScanner() {
+  BarcodeScanner.stopScan();
+  this.scanActive = false;
+}
+
+ionViewWillLeave() {
+  BarcodeScanner.stopScan();
+  this.scanActive = false;
+}
+// This function going to check the last version in the database
+versionCheck(_content, _database ){
+  this._c = _content;
+  this._d = _database;
+  this._cIdentifant = this._c.substr(-1);
+  this._dIdentifiant = this._d.data[0].versions[this._d.data[0].versions.length -1].identifiant
     console.log("Console.log - VersionCheck _c " + this._c);
     console.log("Console.log - VersionCheck _d " + this._d);
     console.log("Console.log - VersionCheck _cIndentifiant " + this._cIdentifant);
