@@ -82,13 +82,14 @@ export class HomePage implements OnInit {
     this.scanActive = false;
   }
   // This function going to check the last version in the database
-  versionCheck(_d, ){
-    console.log("versionCheck " + _d);
-    console.log("versionCheck " + this.d.data[0].versions[this.d.data[0].versions.length -1].identifiant);
+  versionCheck(_d ){
+    console.log("versionCheck1 " + _d);
+    console.log("versionCheck2 " + this.d.data[0].versions[this.d.data[0].versions.length -1].identifiant);
     
     this.versionScan = this.d.data[0].versions[this.d.data[0].versions.length -1].identifiant
     console.log("versionScan " + this.versionScan);
     console.log("versionDure " + this.versionDure);
+  
 
     if (this.versionScan === this.versionDure){
       alert("ok")
@@ -97,9 +98,9 @@ export class HomePage implements OnInit {
     }
 
   }
-  
-  buttonData(){
-    this._data.getData()
+
+    buttonData(){
+    this._data.getData(this.versionDure)
     // .subscribe(data => this.d = data + console.log("hello" + this.d) );
     .subscribe(_data => {
       this.d = _data;
@@ -109,9 +110,26 @@ export class HomePage implements OnInit {
       // With under console.log you must change url "http://bsm-ws.herokuapp.com/documents" in data.service.ts
       //console.log("ButtonData " + this.d.data[this.d.data.length -1].versions[0]._id);
       
-      this.versionCheck(_data)
+      this.versionCheck(_data);
+     
       });
   }
+  
+  // buttonData(){
+  //   this._data.getData()
+  //   // .subscribe(data => this.d = data + console.log("hello" + this.d) );
+  //   .subscribe(_data => {
+  //     this.d = _data;
+  //     console.log('Console.log - buttonData');
+  //     console.log("ButtonData " + this.d.data[0].versions[this.d.data[0].versions.length -1]._id.substring(0,24));
+
+  //     // With under console.log you must change url "http://bsm-ws.herokuapp.com/documents" in data.service.ts
+  //     //console.log("ButtonData " + this.d.data[this.d.data.length -1].versions[0]._id);
+      
+  //     this.versionCheck(_data);
+     
+  //     });
+  // }
 
   // data(){
   //   this._data.getData()

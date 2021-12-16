@@ -15,8 +15,8 @@ export class DataService {
   
   
   // getData used for test
-  getData(): Observable<any>{
-    console.log("getData " + this._urls);
+  getData(vd): Observable<any>{
+    console.log("getData " + this._urls + "vd !!" + vd);
     return this.http.get(this._urls)
   }
 
